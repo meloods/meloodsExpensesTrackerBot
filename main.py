@@ -1,19 +1,16 @@
-import telebot
-from handlers import handle_start, handle_help
+# main.py
+from telebot import TeleBot
 from dotenv import load_dotenv
 import os
+import handlers
 
-# Store your API key in a .env file in the same folder
+# Initialize bot and load environment variables
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
-bot = telebot.TeleBot(API_KEY)
+bot = TeleBot(API_KEY)
 
-@bot.message_handler(commands=['start'])
-def start(message):
-    handle_start(bot, message)
-    
-@bot.message_handler(commands=['help'])
-def start(message):
-    handle_help(bot, message)
+# Register handlers
+handlers.register_handlers(bot)
 
+# Start polling
 bot.polling()
